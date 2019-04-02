@@ -25,8 +25,17 @@ public class test1 {
 		int result[] = sortArrayByParity(a);*/
 //		boolean a = judgeCircle("LL");
 //		int res = hammingDistance(1,4);
-		int a[] = {5,1,5,5,4,4,4,4};
-		int res = repeatedNTimes(a);
+		/*int a[] = {5,1,5,5,4,4,4,4};
+		int res = repeatedNTimes(a);*/
+//		int a[] = {0,2,1,0};
+//		int res = peakIndexInMountainArray(a);
+//		System.out.println(res);
+//		List <Integer> list = selfDividingNumbers(1,22);
+//		System.out.println(list);
+		String a[] = {"cba", "daf", "ghi"};
+//		System.out.println(isnotDesc(a));
+		System.out.println(minDeletionSize(a));
+		
 
 	}
 	public static int numJewelsInStones(String J, String S) {
@@ -280,5 +289,132 @@ public class test1 {
 	        return 0;
 		 
 	        
+	 }
+	 // 852 山脉数组的封顶索引  02/04/2019
+	 public static int peakIndexInMountainArray(int[] A) {
+//		 int res = 0;
+//		 boolean flag = false;
+//		 for(int i =1; i<A.length;i++) {
+//			 for(int j=i;j<A.length;j++) {
+//				 if(A[j]>A[i]) {
+//					 flag = true;
+//				 } else {
+//					 flag = false;
+//				 }
+//			 }
+//			 for(int j=0;j<i;j++) {
+//				 if(A[j]<A[i]) {
+//					 flag = true;
+//				 } else {
+//					 flag = false;
+//				 }
+//			 }
+//			 if(flag) {
+//				 res = i;
+//			 }
+//		 }
+//	     return res;
+		 //由于已经确认是山脉数组了，所以不需要判断完
+		 int flag = 0;
+			int size = A.length;
+			for (int i = 0; i < size; i++) {
+				if (A[i + 1] > A[i]) {
+					flag++;
+				}
+				else {
+					return flag;
+				}
+			}
+			return flag;
+	 }
+	 //728 自除数 
+	 public static List<Integer> selfDividingNumbers(int left, int right) {
+		 List<Integer> list = new ArrayList<Integer>();
+		 int i=1;
+		 boolean flag =false;
+		 for(i=left;i<=right;i++) {
+			 int k = i;
+//			 System.out.println(i);
+			 while(k!=0) {
+				 int num = k%10;
+				 if(num!=0) {
+					 if(i%num ==0) {
+						 flag =true;
+					 } else {
+						 flag =false;
+						 break;
+					 }
+				 } else {
+					 flag =false;
+					 break;
+				 }
+				 k/=10; 
+			 }
+			 if(flag) {
+				 list.add(i);
+			 }
+		 }
+		 return list;
+	  }
+	 // 922 按奇偶排序数组
+	 public static int[] sortArrayByParityII(int[] A) {
+	   int res[] =new int [A.length];
+	   int eval =0;
+	   int odd =1;
+	   for(int i=0;i<A.length;i++) {
+		   if(A[i]%2==0) {
+			   res[eval] = A[i];
+			   eval+=2;
+		   } else if(A[i]%2!=0) {
+			   res[odd] =A[i];
+			   odd+=2;
+		   }
+	   }
+	   return res;
+	 }
+	 // 944删序造列
+	 public static int minDeletionSize(String[] A) {
+		 int num=1;
+		 String res[] = new String[A.length];
+		 char c[] =new char[A.length];
+		 boolean flag =false;
+		 while(!flag) {
+			 for(int i=0;i<A.length;i++) {
+//				 String a = A[i].s(0, num);
+					res[i] = A[i].substring(num);
+			  }
+			 for(int j=0;j<res.length-1;j++) {
+				for(int k=0;k<res[j].length();k++) {
+					if(res[j].charAt(k)<=res[j+1].charAt(k)) {
+						flag =true;
+					} else {
+						flag =false;
+						break;
+					}
+				}
+				if(!flag) {
+					break;
+				}
+				
+			 }
+			 num++;
+		 }
+		 
+		 
+		 
+		 return num;
+	        
+	 }
+	 public static boolean isnotDesc(char[] chars) {
+		 boolean flag =false;
+		 for(int i=0;i<chars.length-1;i++) {
+			 if(chars[i]<=chars[i+1]) {
+				 flag = true;
+			 } else {
+				 flag =false;
+				 break;
+			 }
+		 }
+		 return flag;
 	 }
 }
