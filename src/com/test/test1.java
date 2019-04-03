@@ -32,9 +32,26 @@ public class test1 {
 //		System.out.println(res);
 //		List <Integer> list = selfDividingNumbers(1,22);
 //		System.out.println(list);
-		String a[] = {"cba", "daf", "ghi"};
+//		String a[] = {"cba", "daf", "ghi"};
 //		System.out.println(isnotDesc(a));
-		System.out.println(minDeletionSize(a));
+//		System.out.println(minDeletionSize(a));
+		Scanner scanner = new Scanner(System.in);
+//		ArrayList<Charactor> list =new ArrayList<Charactor>();
+//		int N=scanner.nextInt();
+//		System.out.println(fib(N));
+//		String s= scanner.nextLine();
+//		String res = reverseWords(s);
+//		System.out.println(res);
+//		int a []=shortestToChar("loveleetcode", 'e');
+//		System.out.println(addDigits(38));
+		int A[]= {1,2,3,4,5,7,8,9};
+		int q[][] = {{1,0},{-3,1},{-4,0},{2,3},{2,3},{2,3},{2,3},{2,3},{2,3}};
+		int res[]=sumEvenAfterQueries(A,q);
+		for(int i=0;i<res.length;i++) {
+			System.out.print(res[i]+" ");
+		}
+		
+		
 		
 
 	}
@@ -416,5 +433,112 @@ public class test1 {
 			 }
 		 }
 		 return flag;
+	 }
+	 // 翻转字符串，直接在原数组上修改
+	 public static void reverseString(char[] s) {
+		 if(s == null || s.length <= 1) return;
+			int len = s.length;
+		        for(int i = 0, k = len/2; i < k; i++){
+		          char tmp = s[i];
+		          s[i] = s[len-1-i];
+		          s[len-1-i] = tmp;
+		 }   
+	 }
+	 // 斐波那契数
+	 public static int fib(int N) {
+		 int sum =0;
+		 if(N==0) {
+			 sum=0;
+		 } else if(N==1) {
+			 sum=1;
+		 } else {
+			 sum=fib(N-1)+fib(N-2);
+		 }
+		 return sum;
+		 
+	 }
+	 // 字符串反转
+	 public static String reverseWords(String s) {
+	     String res[] = s.split(" ");
+	     String result ="";
+	     ArrayList<String> list =new ArrayList<String>();
+	     for(int i=0;i<res.length;i++) {
+	    	 String tmp = "";
+	    	 for(int j=res[i].length()-1;j>=0;j--) {
+	    		 tmp+=res[i].charAt(j);
+	    	 }
+	    	 list.add(tmp);
+	     }
+	     for(int k=0;k<list.size();k++) {
+	    	 result+=list.get(k);
+	    	 if(k<list.size()-1) {
+	    		 result+=" ";
+	    	 }
+	    	 
+	     }
+	     return result;
+	 }
+	 // 字符的最短距离
+	 public static int[] shortestToChar(String S, char C) {
+	      ArrayList<Integer> arr = new ArrayList<Integer>();
+	      boolean flag =false;
+	      for(int i=0;i<S.length();i++) {
+	    	  ArrayList<Integer> arr1 = new ArrayList<Integer>();
+	    	  for(int j=0;j<S.length();j++) {
+	    		  if(S.charAt(j)==C) {
+	    			  arr1.add(Math.abs(j-i));  
+	    		  }
+	    	  }
+	    	  Collections.sort(arr1);
+	    	  arr.add(arr1.get(0));
+	      }
+	      System.out.println(arr);
+	      int a[] =new int[arr.size()];
+	      for(int k=0;k<arr.size();k++) {
+	    	  a[k]=arr.get(k);
+	      }
+	      return a;
+	 }
+	 // 转置矩阵
+	 public static int[][] transpose(int[][] A) {
+		 int R = A.length, C = A[0].length;
+	        int[][] ans = new int[C][R];
+	        for (int r = 0; r < R; ++r)
+	            for (int c = 0; c < C; ++c) {
+	                ans[c][r] = A[r][c];
+	            }
+	        return ans;
+	 }
+	 //各位相加
+	 public static int addDigits(int num) {
+		while(num/10!=0) {
+			int tmp =num;
+			int sum =0;
+			while(tmp!=0) {
+		    	int a = tmp%10;
+		    	sum+=a;
+		    	tmp/=10;
+		    }
+			num=sum;
+		}
+		return num;
+	    
+	 }
+	 // 查询后的偶数和
+	 public static int[] sumEvenAfterQueries(int[] A, int[][] queries) {
+		 int res[] =new int[queries.length];
+	     for(int i=0;i<queries.length;i++) {
+	    	 int index = queries[i][1];
+	    	 A[index]+=queries[i][0];
+	    	 int sum =0;
+	    	 for(int j=0;j<A.length;j++) {
+	    		 if(A[j]%2==0) {
+	    			 sum+=A[j];
+	    		 }
+	    		 res[i] =sum;
+	    	 }
+	     }
+	     return res;
+	     
 	 }
 }
