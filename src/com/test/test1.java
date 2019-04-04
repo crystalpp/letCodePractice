@@ -44,16 +44,61 @@ public class test1 {
 //		System.out.println(res);
 //		int a []=shortestToChar("loveleetcode", 'e');
 //		System.out.println(addDigits(38));
-		int A[]= {1,2,3,4,5,7,8,9};
+		/*int A[]= {1,2,3,4,5,7,8,9};
 		int q[][] = {{1,0},{-3,1},{-4,0},{2,3},{2,3},{2,3},{2,3},{2,3},{2,3}};
 		int res[]=sumEvenAfterQueries(A,q);
 		for(int i=0;i<res.length;i++) {
 			System.out.print(res[i]+" ");
-		}
+		}*/
 		
+		/*String ops[] = {"5","-2","4","C","D","9","+","+"};
+		System.out.println(calPoints(ops));*/
+//		Scanner scanner = new Scanner(System.in);
+		  /*int na = scanner.nextInt();
+		  int nb = scanner.nextInt();
+		  int[] aa = new int[na];
+		  int[] bb = new int[nb];
+		  int i = 0;
+		  while (scanner.hasNext()) {
+		   aa[i++] = scanner.nextInt();
+		   if (i == aa.length) {
+		    break;
+		   }
+		  }
+		  i = 0;
+		  while (scanner.hasNext()) {
+		   bb[i++] = scanner.nextInt();
+		   if (i == bb.length) {
+		    break;
+		   }
+		  }
+		int res[] =intersection(aa,bb);
+		myprint(res);*/
+//		generate(5);
+		/*int a[] = {2,2,1};
+		singleNumber(a);*/
+		/*String s= "abcdefghijklmnopqrstuvwxyz";
+		int widths [] = {10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10};
+		myprint(numberOfLines(widths,s));*/
+		/*String A[] = {"cool","lock","cook"};
+		System.out.println(commonChars(A));*/
+		/*int a[][] = {{0,1,0,0},
+		             {1,1,1,0},
+		             {0,1,0,0},
+		             {1,1,0,0}};
+		System.out.println(islandPerimeter(a));*/
+		
+		System.out.println(hasAlternatingBits(10));
+
 		
 		
 
+	}
+	public static void myprint(int[] a) {
+		for(int i=0;i<a.length;i++) {
+			System.out.println(a[i]);
+		}
+		
 	}
 	public static int numJewelsInStones(String J, String S) {
         int sum = 0;
@@ -540,5 +585,158 @@ public class test1 {
 	     }
 	     return res;
 	     
+	 }
+	 // 682棒球比赛
+	 public static int calPoints(String[] ops) {
+	    int sum =0;
+	    ArrayList<Integer> arr =new ArrayList<Integer>();
+	    for(int i=0;i<ops.length;i++) {
+	    	 if(ops[i].charAt(0) == '+') {
+	    		sum+=arr.get(arr.size()-1);
+	    		sum+=arr.get(arr.size()-2);
+	    		arr.add(arr.get(arr.size()-1)+arr.get(arr.size()-2));
+	    	} else if(ops[i].charAt(0) == 'D') {
+	    		sum+=(arr.get(arr.size()-1)*2);
+	    		arr.add(arr.get(arr.size()-1)*2);
+	    	} else if(ops[i].charAt(0) == 'C') {
+	    		sum-=(arr.get(arr.size()-1));
+	    		arr.remove(arr.size()-1);
+	    	} else {
+	    		int score = Integer.valueOf(ops[i]);
+	    		arr.add(score);
+	    		sum+=score;
+	    	}
+	    }
+	    return sum;
+	 }
+	 // 349两个数组的交集
+	 public static int[] intersection(int[] nums1, int[] nums2) {
+		 ArrayList<Integer> arr = new ArrayList<Integer>();
+		 for(int i=0;i<nums1.length;i++) {
+			 for(int j=0;j<nums2.length;j++) {
+				 if(nums1[i] == nums2[j]) {
+					 if(!arr.contains(nums1[i])) {
+						 arr.add(nums1[i]);
+					 }
+				 }
+			 }
+		 }
+		 int res[] =new int[arr.size()];
+		 for(int k=0;k<arr.size();k++) {
+			 res[k]=arr.get(k);
+		 }
+		 return res;
+	 }
+	 // 杨辉三角
+	 public static List<List<Integer>> generate(int numRows) {
+		 List<List<Integer>> res = new ArrayList<List<Integer>>();
+	    for(int i=0;i<numRows;i++) {
+	    	List<Integer> list = new ArrayList<Integer>();
+	    	if(i==0) {
+	    		list.add(1);
+	    		res.add(list);
+	    	} else if(i == 1) {
+	    		list.add(1);
+	    		list.add(1);
+	    		res.add(list);
+	    	} else {
+	    		list.add(1);
+	    		for(int j=1;j<i;j++) {
+	    			list.add(res.get(i-1).get(j)+res.get(i-1).get(j-1));
+	    		}
+	    		list.add(1);
+	    		res.add(list);
+	    	}
+	    }
+	    return res;
+	 }
+	 // 只出现一次的数字
+	 public static int singleNumber(int[] nums) {
+	      int sum=0;
+	        for(int i=0;i<nums.length-1;i++) {
+	          sum^= nums[i];
+	        }
+	      return sum;
+	    }
+	 // 806写字符串需要的行数
+	 public static int[] numberOfLines(int[] widths, String S) {
+		 int line =1;
+		 int sum =0;
+		 int rest = 0;
+		 int res[] =new int[2];
+	    for(int i=0;i<S.length();i++) {
+    	 if(rest+widths[S.charAt(i)-97]>100)
+		  {
+			  line++;
+			  rest=0;
+		  }
+		  rest+=widths[S.charAt(i)-97];
+	    }
+	   res[0] = line;
+	   res[1] = rest;
+	   return res;
+	  }
+	 // 1002 查找常用字符串
+	 public static List<String> commonChars(String[] A) {
+	   List<String> list = new ArrayList<String>();
+	   
+		   boolean flag = false;
+		   for(int j=0;j<A[0].length();j++) {
+			   for(int i=1;i<A.length;i++) {
+				   String f= A[i];
+				   char re = A[0].charAt(j);
+				   if(f.indexOf(re)>=0) {
+					   flag=true;
+				   } else {
+					   flag =false;
+					   break;
+				   }
+			   }
+			   if(flag) {
+				   list.add(A[0].charAt(j)+"");
+				   for(int k=1;k<A.length;k++) {
+					   A[k] = A[k].substring(0, A[k].indexOf(A[0].charAt(j))) +A[k].substring(A[k].indexOf(A[0].charAt(j))+1);
+				   }
+				   
+			   }
+	   }
+	   return list;
+	 }
+	 // 463 岛屿的周长
+	 public static int islandPerimeter(int[][] grid) {
+		 if (grid == null || grid.length == 0) {
+	            return 0;
+	        }
+	        int rsp = 0;
+	        for (int i = 0; i < grid.length; i++) {
+	            for (int j = 0; j < grid[i].length; j++) {
+	                if (grid[i][j] == 1) {
+	                    rsp += 4;
+	                    if (i > 0 && grid[i - 1][j] == 1) {
+	                        rsp -= 2;
+	                    }
+	                    if (j > 0 && grid[i][j - 1] == 1) {
+	                        rsp -= 2;
+	                    }
+	                }
+	            }
+	        }
+	        return rsp;
+	 }
+	 // 693 交替二进制
+	 public static boolean hasAlternatingBits(int n) {
+		 ArrayList <Integer> list = new ArrayList<Integer>();
+	    while(n!=0) {
+	    	list.add(n%2);
+	    	n=n/2;
+	    }
+	    boolean flag= true;
+	    for(int i=0;i<list.size()-1;i++) {
+	    	if(list.get(i)==list.get(i+1)) {
+	    		flag=false;
+	    		break;
+	    	}
+	    }
+	    return flag;
 	 }
 }
