@@ -88,11 +88,27 @@ public class test1 {
 		             {1,1,0,0}};
 		System.out.println(islandPerimeter(a));*/
 		
-		System.out.println(hasAlternatingBits(10));
-
+//		System.out.println(hasAlternatingBits(10));
+//		System.out.println(countPrimeSetBits(10,15));
+		/*int a[][] = {{1,2,3,4},
+		             {5,1,2,3},
+		             {9,5,1,2}}
+		matrixReshape(a,2,2);*/
 		
+//		System.out.println(fizzBuzz(15));
+		/*int a[][] = {{1,2},
+	             {2,2}};
+		isToeplitzMatrix(a);*/
+		/*int num=scanner.nextInt();
+		System.out.println(binaryGap(num));*/
+//		int len=scanner.nextInt();
+//		int a[] =new int[len];
+//		for(int i=0;i<len;i++) {
+//			a[i] = scanner.nextInt();
+//		}
+//		System.out.println(largestPerimeter(a));
+		findTheDifference("abcd","abcde");
 		
-
 	}
 	public static void myprint(int[] a) {
 		for(int i=0;i<a.length;i++) {
@@ -739,4 +755,159 @@ public class test1 {
 	    }
 	    return flag;
 	 }
+	 //762. 二进制表示中质数个计算置位
+	 public static int countPrimeSetBits(int L, int R) {
+		 int num=0;
+	       for(int i=L;i<=R;i++) {
+	    	   int sum=0;
+	    	   int temp=i;
+	    	   while(temp!=0) {
+	    		  int tmp=temp%2;
+	    		  if(tmp==1) {
+	    			  sum++;
+	    		  }
+	    		  temp/=2;
+	    	   }
+	    	   if(isZhishu(sum)) {
+	    		   num++;
+	    	   }
+	       }
+	       return num;
+	 }
+	 public static boolean isZhishu(int num) {
+		 boolean flag = true;
+		 if(num==2) {
+			 flag=true;
+		 } else if(num==1) {
+			 flag=false;
+		 } else {
+			 for(int i=2;i<num;i++) {
+				 if(num%i==0) {
+					flag =false; 
+				 }
+			 }
+		 }
+		 return flag;
+	 }
+	 //566重塑矩阵
+	 public static int[][] matrixReshape(int[][] nums, int r, int c) {
+		 if(nums.length*(nums[0].length)<r*c) {
+			 return nums;
+		 } else {
+			ArrayList<Integer> list = new ArrayList<Integer>();
+			 int res[][] =new int[r][c];
+			 for(int i=0;i<nums.length;i++) {
+				 for(int j=0;j<nums[0].length;j++) {
+					 list.add(nums[i][j]);
+				 }
+			 }
+			 int index=0;
+			 for(int k=0;k<res.length;k++) {
+				 for(int z=0;z<res[k].length;z++) {
+					 index++;
+					 res[k][z] = list.get(index);
+				 }
+			 }
+			 return res;
+		 }
+	 }
+	 //412 FizzBuzz
+	 public static List<String> fizzBuzz(int n) {
+	    List<String> list = new ArrayList<String>();
+	    for(int i=1;i<=n;i++) {
+	    	String s ="";
+	    	if(i%3==0) {
+	    		s+="fizz";
+	    	} 
+	    	if(i%5==0) {
+	    		s+="Buzz";
+	    	}  
+	    	if(i%3!=0 && i%5!=0) {
+	    		s=i+"";
+	    	}
+	    	list.add(s);
+	    	
+	    	
+	    }
+	    return list;
+	 }
+	 //766. 托普利茨矩阵
+	 public static boolean isToeplitzMatrix(int[][] matrix) {
+	      boolean flag =true;
+	      for(int j=1;j<matrix[0].length;j++) {
+	    	  int k=j;
+	      for(int i=matrix.length-1;i>0;i--) {
+		    	 if(k==0||i==0) {
+		    		 break;
+		    	 } else {
+		    		 if(matrix[i][k]!=matrix[i-1][k-1]) {
+		    			  flag = false;
+		    			  break;
+		    		  }
+		    		  k--;
+		    	 }
+	    		 
+	    	  }
+	      }
+	      return flag;
+	 }
+	 //868二进制间距
+	 public static int binaryGap(int N) {
+	     String s="";
+	     while(N!=0) {
+	    	 s+=N%2;
+	    	 N/=2;
+	     }
+	     int distance = 0;
+	     for(int i=0;i<s.length();i++) {
+	    	 if(s.charAt(i)=='1') {
+	    		 int len=0;
+	    		 for(int j=i+1;j<s.length();j++) {
+		    		 if(s.charAt(j)=='1') {
+		    			 len=j-i;
+		    			 break;
+		    		 }
+		    	 }
+	    		 distance = distance>len?distance:len;
+	    	 }
+	    	
+	     }
+	     return distance;
+	 }
+	 // 三角形的最大周长
+	 public static int largestPerimeter(int[] A) {
+		 for(int i=0;i<A.length-1;i++){//外层循环控制排序趟数
+			for(int j=0;j<A.length-1-i;j++){//内层循环控制每一趟排序多少次
+				if(A[j]>A[j+1]){
+				int temp=A[j];
+				A[j]=A[j+1];
+				A[j+1]=temp;
+				}
+			}
+		 } 
+		 for (int i = A.length - 3; i >= 0; --i) {
+			 if (A[i] + A[i+1] > A[i+2])
+	                return A[i] + A[i+1] + A[i+2];
+	        
+		 }
+		 return 0;     
+	    
+	 }
+	 //389 找不同
+	 public static char findTheDifference(String s, String t) {
+//		 char[] arrays = s .toCharArray();
+//
+//		 char[] arrayt = t .toCharArray();
+		 int sum1=0;
+		 int sum2=0;
+		 for(int i=0;i<s.length();i++) {
+			 sum1+=(int)s.charAt(i);
+		 }
+		 for(int i=0;i<t.length();i++) {
+			 sum2+=(int)t.charAt(i);
+		 }
+		 return (char) ((sum2-sum1)-'a');
+		
+	 }
 }
+
