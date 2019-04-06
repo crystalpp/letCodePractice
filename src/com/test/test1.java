@@ -107,10 +107,24 @@ public class test1 {
 //			a[i] = scanner.nextInt();
 //		}
 //		System.out.println(largestPerimeter(a));
-		findTheDifference("abcd","abcde");
+//		findTheDifference("abcd","abcde");
+		/*String a[] = {"a1 9 2 3 1","g1 act car","zo4 4 7","ab1 off key dog","a8 act zoo"};
+		myprint(reorderLogFiles(a));*/
+//		System.out.println(toGoatLatin("over the lazy dog"));
+//		System.out.println(rotatedDigits(10));
+//		System.out.println(detectCapitalUse("mL"));
+//		System.out.println(countAndSay(7));
+//		System.out.println(addBinary("1010","1011"));
+//		System.out.println(checkRecord("PPALLP"));
+//		String a = scanner.nextLine();
+//		String b = scanner.nextLine();
+//		System.out.println(canConstruct(a,b));
+//		System.out.println(reverseVowels("aA"));
+		System.out.println(countBinarySubstrings("01"));
+		reverseOnlyLetters("Test1ng-Leet=code-Q!");
 		
 	}
-	public static void myprint(int[] a) {
+	public static void myprint(Object[] a) {
 		for(int i=0;i<a.length;i++) {
 			System.out.println(a[i]);
 		}
@@ -906,8 +920,362 @@ public class test1 {
 		 for(int i=0;i<t.length();i++) {
 			 sum2+=(int)t.charAt(i);
 		 }
-		 return (char) ((sum2-sum1)-'a');
+		 return (char) ((sum2-sum1));
 		
+	 }
+	 // 杨辉三角II
+	 public static List<Integer> getRow(int rowIndex) {
+		 List<Integer> list = new ArrayList<>();
+	        if(rowIndex == 0) list.add(1);
+	        if(rowIndex == 1) {list.add(1);list.add(1);}
+	        if(rowIndex >= 2) {
+	            list.add(1);
+	            List<Integer> preList = getRow(rowIndex - 1);
+	            for(int i = 0; i < preList.size() - 1; i++) {
+	                list.add(preList.get(i) + preList.get(i + 1));
+	            }
+	            list.add(1);
+	        }
+	        return list;
+	 }
+	 // 感觉题目没读懂
+	 public static String[] reorderLogFiles(String[] logs) {
+		 List<String> list = new ArrayList<String>();
+		 List<String> list1 = new ArrayList<String>();
+		 String arr[] =new String[logs.length];
+	   for(int i=0;i<logs.length;i++) {
+		   boolean flag = false;
+			 String temp[] =logs[i].split(" ");
+			 for(int j=0;j<temp.length;j++) {
+				 if(temp[j].charAt(0)>='a'&&temp[j].charAt(0)<='z') {
+					flag = true;
+				 } else {
+					 flag = false;
+					 list1.add(logs[i]);
+					 break;
+				 }
+			 }
+			 if(flag) {
+				 
+				 list.add(logs[i]);
+			 }
+	   	}
+	   list.addAll(list1);
+	   return list.toArray(arr);
+	 }
+	 // 824 山羊拉丁文
+	 public static String toGoatLatin(String S) {
+	
+		
+	    String arr[] = S.split(" ");
+	    String res ="";
+	    for(int i=0;i<arr.length;i++) {
+	    	String firstChar = (arr[i].charAt(0)+"").toLowerCase();
+//	    	System.out.println(firstChar);
+	    	if(firstChar== "o") {
+				System.out.println("xixixi");
+			}
+	    	if(firstChar.equals("a") || firstChar.equals("e")||firstChar.equals("i")||firstChar.equals("o")||firstChar.equals("u")) {
+	    		arr[i]+="ma";
+	    		
+	    	} else {
+	    		arr[i] = arr[i].substring(1)+arr[i].substring(0, 1);
+	    		arr[i]+="ma";
+	    	}
+	    	
+	    	for(int j=0;j<=i;j++) {
+	    		arr[i]+="a";
+	    	}
+	    	res+=arr[i];
+	    	if(i!=arr.length-1) {
+	    		res+=" ";
+	    	}
+	    	
+	    }
+	    return res;
+	 }
+	 // 788 旋转数字
+	 public static int rotatedDigits(int N) {
+	    int sum=0;
+	    boolean flag = false;
+	    for(int i=0;i<=N;i++) {
+	    	flag= false;
+	    	int a= i;
+	    	while(a!=0) {
+	    		int temp = a%10;
+	    		if(temp==2||temp==5||temp==6||temp==9) {
+	    			flag = true;
+	    		} else {
+	    			flag= false;
+	    			break;
+	    		}
+	    		a/=10;
+	    	}
+	    	if(flag) {
+	    		sum++;
+	    	}
+	    }
+	    return sum;
+	 }
+	 // 520 检测大写字母
+	 public static boolean detectCapitalUse(String word) {
+		 boolean flag = false;
+		 int sum=1;
+		 int sum1=1;
+	     for(int i=1;i<word.length();i++) {
+	    	 if(Character.isUpperCase(word.charAt(0))) {
+	    		 if(Character.isUpperCase(word.charAt(i))) {
+	    			 sum++;
+	    		 }
+	    	 } else {
+	    		 if(!Character.isUpperCase(word.charAt(i))) {
+	    			 sum1++;
+	    		 }
+	    	 }
+	     }
+	     if(Character.isUpperCase(word.charAt(0))) {
+	    	 if(sum==word.length()||sum==1) {
+		    	 flag = true;
+		     } else if(sum<word.length()) {
+		    	 flag=false;
+		     }
+	     } else {
+	    	 if(sum1==word.length()) {
+	    		 flag = true;
+		     } else if(sum1<word.length()) {
+		    	 flag=false;
+	    	 }
+	     }
+	     
+	     return flag;
+	 }
+	 public static String countAndSay(int n) {
+	    String res = "";
+	    
+	    if(n==1) {
+	    	return "1";
+	    } else if(n==2) {
+	    	return "11";
+	    }
+	    String s = countAndSay(n-1);
+	    int num=1;
+	    boolean flag = false;
+	    for(int i=0;i<s.length();i++) {
+    			if(s.charAt(i)==s.charAt(i+1)) {
+    	    		num++;
+    	    		if((i+1)==s.length()-1) {
+    	    			flag=true;
+    	    			res+=(num+"");
+        	    		res+=(s.charAt(i)+"");
+    	    		}
+    	    	} else {  
+    	    		if((i+1)==s.length()-1) {
+    	    			flag=true;
+    	    			res+=(num+"");
+    		    		res+=(s.charAt(i)+"");
+    		    		res+=("1");
+    		    		res+=(s.charAt(i+1)+"");
+    	    		} else {
+    	    			res+=(num+"");
+        	    		res+=(s.charAt(i)+"");
+        	    		num=1;
+    	    		}
+    	    	}
+
+	    	if(flag) {
+	    		break;
+	    	}
+	    }
+	    return res;
+	 }
+	 // 67 二进制求和
+	 public static String addBinary(String a, String b) {
+	     int len = a.length()>b.length()?a.length():b.length();
+	     int num=0;
+	     String res = "";
+	     int j=b.length()-1;
+	     int k=a.length()-1;
+	     for(int i=len-1;i>=0;i--) {
+	    	 int  a1=0;
+	    	 int b1=0;
+	    	 if(a.length()>b.length()) {
+	    		
+	    		 a1=a.charAt(i)-48;
+	    		 if(j<0) {
+	    			 b1=0;
+	    		 } else {
+	    			 b1=b.charAt(j)-48;
+	    			 j--;
+	    		 }
+	    	 } else {
+	    		 
+	    		 b1=b.charAt(i)-48;
+	    		 if(k<0) {
+	    			 a1=0;
+	    		 } else {
+	    			 a1=a.charAt(k)-48;
+	    			 k--;
+	    		 }
+	    	 }
+	    	 
+	    	
+	    	 if(a1+b1+num==3) {
+	    		 num=1;
+	    		 res+="1";
+	    	 } else if(a1+b1+num==2){
+	    		 res+="0";
+	    		 num=1;
+	    	 } else if(a1+b1+num==1){
+	    		 res+="1";
+	    		 num=0;
+	    	 } else {
+	    		 res+="0";
+	    		 num=0;
+	    	 }
+	     }
+	     if(num==1) {
+	    	 res+="1";
+	     }
+	     String s ="";
+	     for(int z=res.length()-1;z>=0;z--) {
+	    	 s+=res.charAt(z);
+	     }
+	     return s;
+	 }
+	 // 551学生出勤记录
+	 public static boolean checkRecord(String s) {
+		 int a=0,c=0;
+		 for(int i=0;i<s.length();i++)
+	        {
+	            if(s.charAt(i)=='A')a++;
+	            if(a>1)return false;
+	            if(s.charAt(i)=='L')c++;
+	            if(c>2)return false;
+	            if(s.charAt(i)!='L')c=0;
+	        }
+	        return true;
+	 }
+	 // 383 赎金信
+	 public static boolean canConstruct(String ransomNote, String magazine) {
+		 boolean flag = false;
+	     if(ransomNote.length()==magazine.length()) {
+	    	 if(ransomNote.equals(magazine)) {
+	    		 flag = true;
+	    	 }
+	     } else {
+	    	 StringBuffer res = new StringBuffer(ransomNote);
+	    	 for(int i=0;i<magazine.length();i++) {
+	    		 int index = res.toString().indexOf(magazine.charAt(i));
+	    		 if(index>=0) {
+	    			 res=res.replace(index,index+1,"");
+	    		 }
+	    	 }
+	    	 if(res.length()==0) {
+	    		 flag=true;
+	    	 }
+	     }
+	     return flag;
+	 }
+	 // 345 反转字符串中的元音字母
+	 public static String reverseVowels(String s) {
+		 String res = "";
+		 char arr[] =s.toCharArray();
+		 List<Integer> list = new ArrayList<Integer> ();
+	     for(int i=0;i<arr.length;i++) {
+	    	 String ch = (arr[i]+"").toLowerCase();
+	    	 if(ch.equals("a")||ch.equals("e")||ch.equals("i")||ch.equals("o")||ch.equals("u")) {
+	    		 list.add(i);
+	    	 }
+	    	 
+	    	 if(list.size()==2) {
+	    		 char temp = arr[list.get(0)];
+	    		 arr[list.get(0)] = arr[list.get(1)];
+	    		 arr[list.get(1)] = temp;
+	    		 list.remove(0);
+	    	 }
+	     }
+	     for(int k=0;k<arr.length;k++) {
+	    	 res+=(arr[k]+"");
+	     }
+	     return res;
+	 }
+	 public static int countBinarySubstrings(String s) {
+		 String sub ="";
+		 int sum=0;
+		 
+	    for(int i=0;i<s.length();i++) {
+	    	for(int j=i;j<s.length();j++) {
+	    		sub = s.substring(i, j+1);
+//	    		System.out.println(sub);
+	    		if(sub.length()%2==0&&sub.length()!=s.length()) {
+	    			if(sub.length()==2) {
+	    				if(sub.charAt(0)!=sub.charAt(1)) {
+	    					System.out.println(sub);
+	    					sum++;
+	    				}
+	    			} else {
+	    				int k=0;
+	    				int num1=0;
+	    				 int num0=0;
+	    				while(k<sub.length()-1) {
+			    			if(sub.charAt(k)==sub.charAt(k+1)) {
+			    				if(sub.charAt(k)=='0') {
+			    					num0++;
+			    				} else {
+			    					num1++;
+			    				}
+			    				
+			    			} else {
+			    				num0--;
+			    			}
+			    			k+=2;
+			    		}
+	    				if(num0==num1&&num0!=0&&num1!=0) {
+	    					System.out.println(sub);
+	    					sum++;
+	    				}
+	    			}
+	    			
+	    		}
+	    		
+	    	}
+	    }
+	    return sum;
+	 }
+	 // 仅仅反转字母
+	 public static String reverseOnlyLetters(String S) {
+//		 List <Integer> index = new ArrayList<Integer>();
+		 String reverS="";
+		 for(int j=S.length()-1;j>=0;j--) {
+			 char ch = S.charAt(j);
+	    	 if(Character.isLetter(ch)) {
+	    		 reverS+=(ch+"");
+	    	 }
+		 }
+		 String s ="";
+		 char ch = ' ';
+		 int n =0; //差值
+		 int m=0; // 开始位置
+		 int start = 0;
+		 int end =0;
+	     for(int i=0;i<S.length();i++) {
+	    	 ch = S.charAt(i);
+	    	 if(!Character.isLetter(ch)) {
+	    		n = i-m;	
+	    		end=start+n;	 
+	    		s+= reverS.substring(start,end);
+	    		s+=(ch+"");	 
+	    		start = end;
+	    		 m=i+1;
+	    	 } else {
+	    		 if(i==S.length()-1) {
+		    		 s+=reverS.substring(start);
+		    	 }
+	    	 }
+	    	 
+	    	 
+	     }
+	     return s;
 	 }
 }
 
