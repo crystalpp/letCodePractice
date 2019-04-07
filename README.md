@@ -1,2 +1,2 @@
-# letCodePractice
-letcode, java 
+# leetCodePractice
+leetcode, java 
