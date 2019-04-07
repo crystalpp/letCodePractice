@@ -120,9 +120,18 @@ public class test1 {
 //		String b = scanner.nextLine();
 //		System.out.println(canConstruct(a,b));
 //		System.out.println(reverseVowels("aA"));
-		System.out.println(countBinarySubstrings("01"));
-		reverseOnlyLetters("Test1ng-Leet=code-Q!");
-		
+		/*System.out.println(countBinarySubstrings("01"));
+		reverseOnlyLetters("Test1ng-Leet=code-Q!");*/
+//		int a[] = {1,3,5,2,4};
+//		int b[] = {6,5,4,3,2,1,7};
+//		nextGreaterElement(a,b);
+//		reverseStr("abcd",4);
+//		isLongPressedName("leelee","lleeelee");
+//		repeatedSubstringPattern("abcabcabc");
+//		System.out.println(isPalindrome("0p      a"));
+//		System.out.println(strStr("heloll","ll"));
+		System.out.println(isValid("{[}"));
+		;
 	}
 	public static void myprint(Object[] a) {
 		for(int i=0;i<a.length;i++) {
@@ -1276,6 +1285,245 @@ public class test1 {
 	    	 
 	     }
 	     return s;
+	 }
+	 // 496 下一个更大元素1
+	 public static int[] nextGreaterElement(int[] nums1, int[] nums2) {
+	       
+	       List<Integer> list = new ArrayList<Integer> ();
+	       int j=0;
+	       for(int i=0;i<nums1.length;i++) {
+	    	   for(int k=0;k<nums2.length;k++) {
+	    		   if(nums1[i] == nums2[k]) {
+	    			   j = k+1;
+	    			   if(k==nums2.length-1) {
+	    				   list.add(-1);
+	    			   } else {
+	    				   while(j<nums2.length) {
+		    				   if(nums2[j]>nums1[i]) {
+		    					   list.add(nums2[j]);
+		    					   j=nums2.length;
+		    				   }
+		    				   if(j==nums2.length-1) {
+		    					   list.add(-1);
+		    				   }
+		    				   j++;
+		    			   }
+	    			   }
+	    			   
+	    		   }
+	    	   }
+	       }
+	       System.out.println(list);
+	       int res[] =new int[list.size()];
+	       for(int i=0;i<list.size();i++) {
+	    	   res[i] =list.get(i);
+	       }
+	       return res;
+	 }
+	 // 812 最大三角形
+	 public double largestTriangleArea(int[][] points) {
+		 double a = 0;
+		 double b = 0;
+	    for(int i=0;i<points.length-1;i++) {
+	    	a=points[i][0]>points[i+1][0]?points[i][0]:points[i+1][0];
+	    	b=points[i][1]>points[i+1][1]?points[i][1]:points[i+1][1];
+	    }
+	    a = points[points.length-1][0]>a?points[points.length-1][0]:a;
+	    b = points[points.length-1][1]>a?points[points.length-1][1]:a;
+	    return (double)(a+b)/2;
+	 }
+	 //541反转字符串
+	 public static String reverseStr(String s, int k) {
+	    String res = "";
+	    int start = 0;
+	    String firstTwo = "";
+	    String lastTwo ="";
+	    String ss ="";
+	    String ss1=s;
+	    
+	    if(ss1.length()<k*2) {
+    		if(ss1.length()<k) {
+	    		res+=new StringBuilder(ss1).reverse().toString();
+	    	} else {
+	    		ss1=new StringBuilder(ss1.substring(0,k)).reverse().toString() + ss1.substring(k);
+	    		res+=ss1;
+	    		ss1="";
+	    	}
+    	} else {
+    		while((k*2)<=ss1.length()) {
+    	    	ss = ss1.substring(start, 2*k);
+    	    	ss1=ss1.substring(2*k);
+    	    	firstTwo = ss.substring(start,k);
+    	    	lastTwo = ss.substring(k,2*k);
+    	    	firstTwo =new StringBuilder(firstTwo).reverse().toString();
+    	    	res+=(firstTwo+lastTwo);
+    	    	if(ss1.length()<k*2) {
+    	    		if(ss1.length()<k) {
+    		    		res+=new StringBuilder(ss1).reverse().toString();
+    		    	} else {
+    		    		ss1=new StringBuilder(ss1.substring(0,k)).reverse().toString() + ss1.substring(k);
+    		    		res+=ss1;
+    		    		ss1="";
+    		    	}
+    	    	}
+    	    }
+    	}
+	    return res;
+	 }
+	 // 字符串相加
+	 public String addStrings(String num1, String num2) {
+	    StringBuilder sb = new StringBuilder();
+	    int len1 = num1.length();
+	    int len2 = num2.length();
+	    int a =0;
+	    while(len1!=0||len2!=0||a!=0) {
+	    	if(len1>0) {
+	    		len1--;
+	    		a+=num1.charAt(len1)-'0';
+	    	}
+	    	if(len2>0) {
+	    		len2--;
+	    		a+=num2.charAt(len2)-'0';
+	    	}
+	    	sb.append(a%10);
+	    	a/=10;
+	    }
+	    return sb.reverse().toString();
+	 }
+	 // 925长按输入
+	 public static boolean isLongPressedName(String name, String typed) {
+		 if (name.length() > typed.length()) {
+	            return false;
+	        }
+	        int oldIndex = 0;
+	        for (int i = 0; i < name.length(); i++) {
+	            char value = name.charAt(i);
+	            int j = oldIndex;
+	            boolean flag = false;
+	            for (; j < typed.length(); j++) {
+	                if (typed.charAt(j) == value) {
+	                    flag = true;
+	                    oldIndex = j + 1;
+	                    break;
+	                }
+	            }
+	            if (!flag) {
+	                return false;
+	            }
+	        }
+	        return true;
+	 }
+	 // 459 重复的字符串
+	 public static boolean repeatedSubstringPattern(String s) {
+		 String sub = "";
+		 String res = "";
+		 boolean flag = false;
+		 int len=0;
+		 StringBuilder sb = new StringBuilder(s);
+	     for(int i=0;i<s.length();i++) {
+	    	 for(int j=i+1;j<s.length();j++) {
+	    		 sub = sb.substring(i,j);
+	    		 while(len<s.length()) {
+		    			res+=sub;
+		    			len =len+sub.length();
+	    			}
+	    	 
+	    		 
+	    		 len=0;
+	    		 if(res.equals(s)) {
+	    			 flag = true;
+	    			 i=s.length();
+	    			 j=s.length();
+	    		 }
+	    		 res="";
+	    	 }
+	     }
+	     System.out.println(flag);
+	     return flag;
+	 }
+	 // 125 验证回文串
+	 public static boolean isPalindrome(String s) {
+		 if(s == null) {
+			 return true;
+		 }
+		 StringBuilder sb = new StringBuilder();
+		 char a[] = s.toLowerCase().toCharArray();
+		 for(int i = 0;i<a.length;i++) {
+			if(Character.isLetterOrDigit(a[i])) {
+				sb.append(a[i]);
+			}
+		 }
+		 return sb.toString().equals(sb.reverse().toString());
+	 }
+	 // strStr
+	 public static int strStr(String haystack, String needle) {
+	     if(needle.length() == 0) {
+	         return 0;
+	     }
+	     if(needle.length()>haystack.length()) {
+	         return -1;
+	     }
+	     int res = -1;
+	     int k = 0;
+	     String sub ="";
+	     char a[] =haystack.toCharArray();
+	     for(int i=0;i<a.length;i++) {
+	         if(needle.charAt(0) == a[i]) {
+	             k = i+needle.length();
+	             if( k >= haystack.length()) {
+	                 sub =haystack.substring(i);
+	             } else {
+	                 sub = haystack.substring(i, k);
+	             }
+	             if(sub.equals(needle)) {
+	                 res = i;
+	                 i=a.length;
+	                 k=a.length;
+	             }
+	         }
+	     }
+	     return res;   
+	 }
+	 // 20 有效的括号
+	 public static boolean isValid(String s) {
+	     Stack<Character> stack = new Stack<Character>();
+	     char ss[] =s.toCharArray();
+	     boolean flag = false;
+	     if(s.length() == 0) {
+	         return true;
+	     }
+	     if(s.length() == 1) {
+	         return false;
+	     }
+	     for(int i=0;i<ss.length;i++) {
+             if(ss[i] == '[' || ss[i] == '{' || ss[i] == '(') {
+                 stack.push(ss[i]);
+             } else {
+                 if(stack.isEmpty()) {
+                     i=ss.length;
+                     flag= false;
+                 } else {
+                     if(stack.peek() == '[' && ss[i] == ']') {
+                         stack.pop();
+                     } else if(stack.peek() == '{' && ss[i] == '}') {
+                         stack.pop();
+                     } else if(stack.peek() == '(' && ss[i] == ')') {
+                         stack.pop();
+                     } else {
+                         i=ss.length;
+                         flag= false;
+                     }
+                     if(stack.isEmpty()) {
+                         flag = true;
+                     } else {
+                         flag =  false;
+                     }
+                 }
+                 
+             }
+	       }
+	    
+	     return flag;
 	 }
 }
 
